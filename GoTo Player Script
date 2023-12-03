@@ -1,0 +1,32 @@
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+game:GetService("StarterGui"):SetCore("SendNotification",{
+Title = "script loaded enjoy!",
+Text = "the credits to the user of you", 
+
+Button1 = "Yes",
+Button2 = "Cancel",
+Duration = 30 
+})
+
+local function teleportToUser(username)
+    local player = game.Players.LocalPlayer
+    local targetPlayer = game.Players:FindFirstChild(username)
+
+    if targetPlayer then
+        local targetCharacter = targetPlayer.Character
+        if targetCharacter then
+            player.Character.HumanoidRootPart.CFrame = targetCharacter.HumanoidRootPart.CFrame
+        end
+    else
+        warn("Player '" .. username .. "' not found!")
+    end
+end
+
+game.Players.LocalPlayer.Chatted:Connect(function(message)
+    if message:sub(1, 6) == ".goto " then
+        local username = message:sub(7)
+        teleportToUser(username)
+    end
+end)
